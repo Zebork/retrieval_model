@@ -1,0 +1,36 @@
+{% extends "news2.html" %}
+{% block mainbody %}
+    <a href="{{ url }}"> 
+      <h5 style="color:blue">查看原文</h5>
+    </a>
+    {% for cell in cell_list %}
+
+    <p class="one-p">
+       {{ cell }}
+    </p>
+
+    {% endfor %}
+    {% if point %}
+    <h4 style="color:blue">评论详情 </h4>
+    {% endif %}
+    {% for comment in comments %}
+    <h5>ID:{{ comment.user_id }}  时间：{{ comment.create_time }} {{ comment.goodbad }}</h5>
+    <p class="one-p">
+       {{ comment.text }}
+    </p>
+    {% endfor %}
+
+
+{% endblock %}
+
+{% block related %}
+    {% for cell in related %}
+        <a href="{{ cell.local_url }}" target="_blank">
+        <div class="txt">
+            {{ cell.title }}
+        </div>
+        </a>
+    {% endfor %}
+
+{% endblock %}
+

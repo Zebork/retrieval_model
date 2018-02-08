@@ -1,0 +1,79 @@
+{% extends "google_s8.html" %}
+{% block mainbody %}
+<!-- <style>
+.details:
+</style> -->
+<script>
+    function show_detail(_this){
+        var details = jQuery(_this).find('.details')
+        jQuery.ajax({
+                url:"/details?req=" + jQuery(_this).attr("source") + '&q=' + jQuery("title").attr('query'),  //修改这个url并带参数
+                dataType:'json',  
+                data:'',  
+                jsonp:'callback',   
+                //async: false
+                type:'GET',
+                success: function suc(result){
+                    if(result){
+                        var result_dic = eval(result);
+                        var content = result_dic.content
+                        jQuery(_this).find('.content').html(content);
+                        jQuery(_this).find('.st').hide()
+                        details.show();
+                    }
+                },
+                error:function err(result){
+
+                }
+            })
+        
+    }
+    function delete_detail(_this){
+        var details = jQuery(_this).find('.details')
+        jQuery(_this).find('.st').show()
+        details.hide()
+    }
+</script>
+
+    {% if Nomatch %}
+    <p class="ssp card-section"><span class="spell">您是不是要找：</span> <a class="spell" href="/search?q={{ term1 }}"><em>{{term1}}</em></a> </p>
+    {% endif %}
+
+    {% for cell in cell_list %}
+        <div class="g" source="{{ cell.name }}" onmouseenter="show_detail(this)" onmouseleave="delete_detail(this)">
+            <!--m-->
+            <div data-hveid="43" data-ved="0ahUKEwjZw7edkKjYAhUJVLwKHcBMApcQFQgrKAAwAA">
+                <div class="rc">
+                    <h3 class="r"><a href="{{ cell.local_url }}">{{ cell.title }}</a></h3>
+                    <div class="s">
+                        <div>
+                            <div class="f kv _SWb" style="white-space:nowrap">
+                                <cite class="_Rm">{{ cell.url }}</cite>
+                                <div class="action-menu ab_ctl">
+                                    <a class="_Fmb ab_button" href="{{ cell.url }}" id="am-b0" aria-label="结果详情" aria-expanded="false" aria-haspopup="true" role="button" jsaction="m.tdd;keydown:m.hbke;keypress:m.mskpe" data-ved="0ahUKEwjZw7edkKjYAhUJVLwKHcBMApcQ7B0ILTAA"><span class="mn-dwn-arw"></span></a>
+                                    <div class="action-menu-panel ab_dropdown" role="menu" tabindex="-1" jsaction="keydown:m.hdke;mouseover:m.hdhne;mouseout:m.hdhue" data-ved="0ahUKEwjZw7edkKjYAhUJVLwKHcBMApcQqR8ILjAA">
+                                        <ol>
+                                            <li class="action-menu-item ab_dropdownitem" role="menuitem"><a class="fl" href="https://webcache.googleusercontent.com/search?q=cache:Fui7qvpb8yMJ:https://zh.wikipedia.org/zh-hans/JJ+&amp;cd=1&amp;hl=zh-CN&amp;ct=clnk&amp;gl=jp&amp;lr=lang_en%7Clang_zh-CN" onmousedown="return rwt(this,'','','','1','AOvVaw3-9WT1ERHuXPdAp11nInS8','','0ahUKEwjZw7edkKjYAhUJVLwKHcBMApcQIAgvMAA','','',event)">网页快照</a></li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="st">{{ cell.content | safe }}</span>
+                            <div class="details" style="display:none">
+                                <div class = "title"></div>
+                                <div class = "content"></div>
+                                <!-- <span class="st">{{ cell.content | safe }}</span> -->
+                                <div class = "comments"></div>
+                        </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+ 
+            <!--n-->
+        </div>
+    {% endfor %}
+
+
+{% endblock %}
